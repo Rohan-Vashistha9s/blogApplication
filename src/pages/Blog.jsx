@@ -8,7 +8,7 @@ const Blog = () => {
 
   const { id } = useParams();
 
-  const [userAuthenticated, setUserAuthenticated] = useState(false)
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
 
 
