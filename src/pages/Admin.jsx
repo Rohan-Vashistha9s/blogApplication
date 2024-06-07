@@ -1,11 +1,34 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import BlogContext from "../context/BlogContext";
 import AdminNavbar from "../components/AdminNavbar";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+import { checkAuth } from "../helpers/checkAuth";
+import CreateBlog from "../components/CreateBlog";
 
 const Admin = () => {
   const { isAuth, setIsAuth } = useContext(BlogContext);
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:5000/api/login", {
+        username: e.target.username.value,
+        password: e.target.password.value,
+      });
+      const data = await res.data;
+      toast.success(data.message);
+      setIsAuth(true);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth()
+      .then((data) => setIsAuth(data))
+      .catch((error) => console.log(error.message));
+  }, []);
 
   return (
     <div>
@@ -13,7 +36,7 @@ const Admin = () => {
         <div className="h-screen flex justify-center items-center">
           {/* ADMIN LOGIN */}
           <form
-         
+            onSubmit={handleLogin}
             className="grid grid-cols-1 gap-3 bg-white w-[80vw] md:w-[20vw] p-3 rounded-lg"
           >
             <div className="flex flex-col">
@@ -59,7 +82,7 @@ const Admin = () => {
       ) : (
         <div>
           <AdminNavbar />
-         
+          <CreateBlog/>
         </div>
       )}
     </div>
