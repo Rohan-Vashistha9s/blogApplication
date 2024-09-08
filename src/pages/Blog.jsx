@@ -197,7 +197,7 @@ const Blog = () => {
               src="/logo.jpg"
               alt="mylogo"
               className="rounded-full w-[40px] h-[40px]"
-            />
+            /> 
             <div>
               <h4 className="font-bold">{blog.author}</h4>
               <p className="font-bold">{convertDate(blog.createdAt)}</p>
